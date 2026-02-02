@@ -1,13 +1,14 @@
 # Contacts DB
 
-A lightweight CRM for managing founder and investor contacts with AI-assisted enrichment.
+A lightweight CRM for managing founder and investor contacts.
+
+**Live at:** https://contacts-db.thramsy.com/
 
 ## Features
 
 - **Magic Link Auth** - Simple, passwordless login via email
-- **Gmail Sync** - Import contacts from Google Contacts
-- **LinkedIn Import** - Upload your LinkedIn connections CSV
-- **AI Enrichment** - Automatically enrich contacts with investor/founder data using Google Gemini
+- **LinkedIn Import** - Upload your LinkedIn connections CSV with auto-tagging
+- **Auto-Tagging** - Automatically tags contacts as Founder or Investor based on job title and company
 - **Contact Management** - View, edit, search, and filter contacts
 - **CSV Export** - Export all contacts to CSV
 
@@ -16,7 +17,6 @@ A lightweight CRM for managing founder and investor contacts with AI-assisted en
 - **Frontend/Backend**: Next.js 14 (App Router)
 - **Database**: Supabase (Postgres)
 - **Styling**: Tailwind CSS + shadcn/ui
-- **AI**: Google Gemini 1.5 Flash (free tier)
 - **Auth**: Supabase Auth (magic link)
 
 ## Setup
@@ -34,21 +34,7 @@ npm install
 2. Go to **SQL Editor** and run the contents of `supabase/schema.sql`
 3. Go to **Settings > API** and copy your keys
 
-### 3. Set up Google Cloud (for Gmail sync)
-
-1. Create a project at [console.cloud.google.com](https://console.cloud.google.com)
-2. Enable **People API**
-3. Go to **APIs & Services > Credentials**
-4. Create **OAuth 2.0 Client ID** (Web application)
-5. Add authorized redirect URI: `http://localhost:3000/api/google/callback`
-6. Copy Client ID and Client Secret
-
-### 4. Set up Google AI (for enrichment)
-
-1. Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
-2. Create an API key (free, no billing required)
-
-### 5. Environment Variables
+### 3. Environment Variables
 
 Copy `.env.local.example` to `.env.local` and fill in:
 
@@ -58,18 +44,11 @@ NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 
-# Google OAuth (for Gmail sync)
-GOOGLE_CLIENT_ID=your-client-id
-GOOGLE_CLIENT_SECRET=your-client-secret
-
-# Google AI (Gemini)
-GOOGLE_AI_API_KEY=your-gemini-api-key
-
 # App URL
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-### 6. Run Development Server
+### 4. Run Development Server
 
 ```bash
 npm run dev
@@ -83,22 +62,19 @@ Open [http://localhost:3000](http://localhost:3000)
 2. Import to [Vercel](https://vercel.com)
 3. Add environment variables
 4. Update `NEXT_PUBLIC_APP_URL` to your production URL
-5. Update Google OAuth redirect URI to `https://your-domain.vercel.app/api/google/callback`
 
 ## Usage
 
 ### Adding Contacts
 
 1. **Manual**: Click "Add Contact" and fill out the form
-2. **Gmail**: Go to Import → Connect Gmail → Sync Now
-3. **LinkedIn**: Go to Import → Upload your Connections.csv
+2. **LinkedIn**: Go to Import → Upload your Connections.csv
 
-### AI Enrichment
+### Auto-Tagging
 
-When viewing or creating a contact, click "Enrich with AI" to automatically:
-- Determine if they're an investor or founder
-- Pull fund information (for investors)
-- Pull company information (for founders)
+When importing from LinkedIn, contacts are automatically tagged:
+- **Founder**: Job title contains "founder", "co-founder", or "cofounder"
+- **Investor**: Company name contains "capital", "ventures", or "fund" (with exclusions for false positives like "Capital One")
 
 ### Exporting
 
@@ -117,9 +93,8 @@ src/
 ├── components/             # React components
 ├── lib/                    # Utility libraries
 │   ├── supabase/           # Database client
-│   ├── google/             # Google OAuth & People API
-│   ├── gemini/             # AI enrichment
-│   └── linkedin/           # CSV parser
+│   ├── linkedin/           # CSV parser
+│   └── tagging.ts          # Auto-tagging logic
 └── types/                  # TypeScript types
 ```
 
