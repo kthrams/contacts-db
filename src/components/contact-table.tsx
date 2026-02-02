@@ -141,13 +141,13 @@ export function ContactTable({ contacts }: ContactTableProps) {
 
       {/* Table */}
       <div className="rounded-lg border bg-white">
-        <Table>
+        <Table className="table-fixed w-full">
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Company</TableHead>
-              <TableHead>Tags</TableHead>
-              <TableHead>Source</TableHead>
+              <TableHead className="w-[40%]">Name</TableHead>
+              <TableHead className="w-[30%]">Company</TableHead>
+              <TableHead className="w-[15%]">Tags</TableHead>
+              <TableHead className="w-[15%]">Source</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -180,27 +180,27 @@ export function ContactTable({ contacts }: ContactTableProps) {
                   onClick={() => (window.location.href = `/contacts/${contact.id}`)}
                 >
                   <TableCell className="font-medium">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
                       {contact.photo_url ? (
                         <img
                           src={contact.photo_url}
                           alt={contact.full_name}
-                          className="h-8 w-8 rounded-full object-cover"
+                          className="h-8 w-8 rounded-full object-cover flex-shrink-0"
                         />
                       ) : (
-                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-600">
+                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-600 flex-shrink-0">
                           {contact.full_name.charAt(0).toUpperCase()}
                         </div>
                       )}
-                      <div>
-                        <div>{contact.full_name}</div>
+                      <div className="min-w-0">
+                        <div className="truncate">{contact.full_name}</div>
                         {contact.job_title && (
-                          <div className="text-sm text-gray-500">{contact.job_title}</div>
+                          <div className="text-sm text-gray-500 truncate">{contact.job_title}</div>
                         )}
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="text-gray-600">{contact.company || '-'}</TableCell>
+                  <TableCell className="text-gray-600 truncate">{contact.company || '-'}</TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
                       {contact.tags?.map((tag) => (
