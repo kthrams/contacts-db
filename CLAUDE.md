@@ -64,4 +64,4 @@ Note: `GOOGLE_AI_API_KEY` was removed when we removed AI enrichment.
 See `BACKLOG.md` for planned features including:
 - AI enrichment with web search
 - De-duplicate/merge contacts
-- Hourly auto-sync for Gmail
+- Re-enable Google Contacts sync
