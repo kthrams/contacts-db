@@ -76,6 +76,18 @@ When importing from LinkedIn, contacts are automatically tagged:
 - **Founder**: Job title contains "founder", "co-founder", or "cofounder"
 - **Investor**: Company name contains "capital", "ventures", or "fund" (with exclusions for false positives like "Capital One")
 
+### Contact Fields
+
+The contact table displays the following information:
+
+| Column | Description |
+|--------|-------------|
+| Name | Full name with profile photo and job title |
+| Email | Email address |
+| Company | Company name |
+| Tags | Auto-assigned or manual tags (Founder, Investor) |
+| Source | Where the contact came from (LinkedIn, Manual) |
+
 ### Exporting
 
 Click "Export CSV" on the dashboard to download all contacts.

@@ -145,7 +145,6 @@ export function ContactTable({ contacts }: ContactTableProps) {
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
               <TableHead>Company</TableHead>
               <TableHead>Tags</TableHead>
               <TableHead>Source</TableHead>
@@ -154,7 +153,7 @@ export function ContactTable({ contacts }: ContactTableProps) {
           <TableBody>
             {filteredContacts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={4} className="text-center py-8 text-gray-500">
                   {contacts.length === 0 ? (
                     <div className="space-y-2">
                       <p>No contacts yet</p>
@@ -201,7 +200,6 @@ export function ContactTable({ contacts }: ContactTableProps) {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="text-gray-600">{contact.email || '-'}</TableCell>
                   <TableCell className="text-gray-600">{contact.company || '-'}</TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
