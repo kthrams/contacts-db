@@ -164,7 +164,7 @@ export function ContactTable({ contacts }: ContactTableProps) {
                         </Link>{' '}
                         or{' '}
                         <Link href="/import" className="text-blue-600 hover:underline">
-                          import from Gmail/LinkedIn
+                          import from LinkedIn
                         </Link>
                       </p>
                     </div>
