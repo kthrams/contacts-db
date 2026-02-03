@@ -4,7 +4,8 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import { Loader2, Upload, FileText } from 'lucide-react';
+import { Loader2, Upload, FileText, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export function LinkedInUpload() {
   const router = useRouter();
@@ -130,8 +131,9 @@ export function LinkedInUpload() {
         )}
       </div>
 
+      {/* Import result with "View Contacts" link - include this pattern for future import sources */}
       {uploadResult && (
-        <div className="p-3 bg-gray-50 rounded-md text-sm">
+        <div className="p-3 bg-gray-50 rounded-md text-sm space-y-2">
           <p>
             <strong>{uploadResult.imported}</strong> contacts imported
           </p>
@@ -140,6 +142,13 @@ export function LinkedInUpload() {
               {uploadResult.skipped} duplicates skipped
             </p>
           )}
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium"
+          >
+            View all contacts
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       )}
     </div>
