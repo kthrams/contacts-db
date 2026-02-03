@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Contacts DB",
+  title: "Dre's Contact Database",
   description: "Manage your founder and investor contacts",
 };
 

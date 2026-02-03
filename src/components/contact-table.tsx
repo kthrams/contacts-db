@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Search, Download, Upload, ArrowUp, ArrowDown, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Download, Upload, ArrowUp, ArrowDown, Trash2, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 
 type SortColumn = UserPreferences['sort_column'];
 type SortDirection = UserPreferences['sort_direction'];
@@ -434,7 +434,20 @@ export function ContactTable({ contacts }: ContactTableProps) {
                         </div>
                       )}
                       <div className="min-w-0">
-                        <div className="truncate">{contact.full_name}</div>
+                        <div className="flex items-center gap-1">
+                          <span className="truncate">{contact.full_name}</span>
+                          {contact.linkedin_url && (
+                            <a
+                              href={contact.linkedin_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex-shrink-0 text-gray-400 hover:text-gray-600"
+                            >
+                              <ExternalLink className="h-4 w-4" />
+                            </a>
+                          )}
+                        </div>
                         {contact.job_title && (
                           <div className="text-sm text-gray-500 truncate">{contact.job_title}</div>
                         )}

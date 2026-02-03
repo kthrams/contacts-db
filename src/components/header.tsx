@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { LogOut, Settings, User } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 const navItems = [
   { href: '/dashboard', label: 'Contacts' },
@@ -33,8 +34,9 @@ export function Header({ userEmail }: { userEmail?: string }) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/dashboard" className="text-xl font-semibold text-gray-900">
-              Contacts DB
+            <Link href="/dashboard" className="flex items-center gap-2 text-xl font-semibold text-gray-900">
+              Dre&apos;s Contact Database
+              <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-700">MVP</Badge>
             </Link>
             <nav className="flex gap-1">
               {navItems.map((item) => (
