@@ -25,6 +25,21 @@ export interface GoogleTokens {
 
 export type ContactFormData = Omit<Contact, 'id' | 'created_at' | 'updated_at' | 'user_id'>;
 
+export interface UserPreferences {
+  user_id: string;
+  sort_column: 'full_name' | 'company' | 'tags' | 'source';
+  sort_direction: 'asc' | 'desc';
+  rows_per_page: 50 | 100 | 1000 | -1; // -1 means "all"
+  created_at?: string;
+  updated_at?: string;
+}
+
+export const DEFAULT_USER_PREFERENCES: Omit<UserPreferences, 'user_id'> = {
+  sort_column: 'tags',
+  sort_direction: 'desc',
+  rows_per_page: 50,
+};
+
 export const DEFAULT_TAGS = [
   'Founder',
   'Investor',

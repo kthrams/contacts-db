@@ -90,6 +90,31 @@ CREATE POLICY "Users can delete their own google tokens"
   ON google_tokens FOR DELETE
   USING (auth.uid() = user_id);
 
+-- User preferences table (for table settings like sort, pagination)
+CREATE TABLE IF NOT EXISTS user_preferences (
+  user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  sort_column TEXT DEFAULT 'tags',
+  sort_direction TEXT DEFAULT 'desc',
+  rows_per_page INTEGER DEFAULT 50,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- User preferences policies
+ALTER TABLE user_preferences ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view their own preferences"
+  ON user_preferences FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert their own preferences"
+  ON user_preferences FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update their own preferences"
+  ON user_preferences FOR UPDATE
+  USING (auth.uid() = user_id);
+
 -- Updated at trigger function
 CREATE OR REPLACE FUNCTION update_updated_at()
 RETURNS TRIGGER AS $$
@@ -103,5 +128,12 @@ $$ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS contacts_updated_at ON contacts;
 CREATE TRIGGER contacts_updated_at
   BEFORE UPDATE ON contacts
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at();
+
+-- Trigger for user_preferences updated_at
+DROP TRIGGER IF EXISTS user_preferences_updated_at ON user_preferences;
+CREATE TRIGGER user_preferences_updated_at
+  BEFORE UPDATE ON user_preferences
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at();
