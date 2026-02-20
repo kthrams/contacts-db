@@ -245,9 +245,9 @@ export function ContactTable({ contacts }: ContactTableProps) {
 
   const getSourceBadge = (source: string) => {
     const colors: Record<string, string> = {
-      gmail: 'bg-red-100 text-red-700',
-      linkedin_csv: 'bg-blue-100 text-blue-700',
-      manual: 'bg-gray-100 text-gray-700',
+      gmail: 'bg-[#FCEEBA] text-[#A82C00]',
+      linkedin_csv: 'bg-[#CEF6BB] text-[#05690D]',
+      manual: 'bg-[#E4ECEC] text-[#545969]',
     };
     const labels: Record<string, string> = {
       gmail: 'Gmail',
@@ -272,7 +272,7 @@ export function ContactTable({ contacts }: ContactTableProps) {
 
   // Don't render until preferences are loaded to avoid flash
   if (!preferencesLoaded) {
-    return <div className="p-8 text-center text-gray-500">Loading...</div>;
+    return <div className="p-8 text-center text-muted-foreground">Loading...</div>;
   }
 
   return (
@@ -280,8 +280,8 @@ export function ContactTable({ contacts }: ContactTableProps) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Contacts</h1>
-          <p className="text-sm text-gray-500">
+          <h1 className="text-xl font-semibold text-foreground">Contacts</h1>
+          <p className="text-sm text-muted-foreground">
             {processedContacts.length} of {contacts.length} contacts
           </p>
         </div>
@@ -301,8 +301,8 @@ export function ContactTable({ contacts }: ContactTableProps) {
 
       {/* Bulk Actions Bar */}
       {isSomeSelected && (
-        <div className="flex items-center gap-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-          <span className="text-sm font-medium text-blue-900">
+        <div className="flex items-center gap-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
+          <span className="text-sm font-medium text-primary">
             {selectedIds.size} selected
           </span>
           <div className="flex gap-2">
@@ -324,7 +324,7 @@ export function ContactTable({ contacts }: ContactTableProps) {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Search contacts..."
             value={search}
@@ -348,7 +348,7 @@ export function ContactTable({ contacts }: ContactTableProps) {
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border bg-white">
+      <div className="rounded-lg border border-border bg-card shadow-[0px_1px_1px_rgba(0,0,0,0.03),0px_3px_6px_rgba(18,42,66,0.02)]">
         <Table className="w-full">
           <TableHeader>
             <TableRow>
@@ -360,25 +360,25 @@ export function ContactTable({ contacts }: ContactTableProps) {
                 />
               </TableHead>
               <TableHead
-                className="w-[35%] cursor-pointer hover:bg-gray-50"
+                className="w-[35%] cursor-pointer hover:bg-accent"
                 onClick={() => handleSort('full_name')}
               >
                 Name <SortIcon column="full_name" />
               </TableHead>
               <TableHead
-                className="w-[25%] cursor-pointer hover:bg-gray-50"
+                className="w-[25%] cursor-pointer hover:bg-accent"
                 onClick={() => handleSort('company')}
               >
                 Company <SortIcon column="company" />
               </TableHead>
               <TableHead
-                className="w-[15%] cursor-pointer hover:bg-gray-50"
+                className="w-[15%] cursor-pointer hover:bg-accent"
                 onClick={() => handleSort('tags')}
               >
                 Tags <SortIcon column="tags" />
               </TableHead>
               <TableHead
-                className="w-[15%] cursor-pointer hover:bg-gray-50"
+                className="w-[15%] cursor-pointer hover:bg-accent"
                 onClick={() => handleSort('source')}
               >
                 Source <SortIcon column="source" />
@@ -388,12 +388,12 @@ export function ContactTable({ contacts }: ContactTableProps) {
           <TableBody>
             {paginatedContacts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                   {contacts.length === 0 ? (
                     <div className="space-y-2">
                       <p>No contacts yet</p>
                       <p className="text-sm">
-                        <Link href="/import" className="text-blue-600 hover:underline">
+                        <Link href="/import" className="text-primary hover:underline">
                           Import from LinkedIn
                         </Link>{' '}
                         to get started
@@ -408,7 +408,7 @@ export function ContactTable({ contacts }: ContactTableProps) {
               paginatedContacts.map((contact) => (
                 <TableRow
                   key={contact.id}
-                  className={`hover:bg-gray-50 ${selectedIds.has(contact.id) ? 'bg-blue-50' : ''}`}
+                  className={`hover:bg-accent ${selectedIds.has(contact.id) ? 'bg-primary/5' : ''}`}
                 >
                   <TableCell className="w-[1%] whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                     <Checkbox
@@ -429,7 +429,7 @@ export function ContactTable({ contacts }: ContactTableProps) {
                           className="h-8 w-8 rounded-full object-cover flex-shrink-0"
                         />
                       ) : (
-                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-600 flex-shrink-0">
+                        <div className="h-8 w-8 rounded-full bg-secondary flex items-center justify-center text-sm font-medium text-muted-foreground flex-shrink-0">
                           {contact.full_name.charAt(0).toUpperCase()}
                         </div>
                       )}
@@ -442,20 +442,20 @@ export function ContactTable({ contacts }: ContactTableProps) {
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="flex-shrink-0 text-gray-400 hover:text-gray-600"
+                              className="flex-shrink-0 text-muted-foreground hover:text-muted-foreground"
                             >
                               <ExternalLink className="h-4 w-4" />
                             </a>
                           )}
                         </div>
                         {contact.job_title && (
-                          <div className="text-sm text-gray-500 truncate">{contact.job_title}</div>
+                          <div className="text-sm text-muted-foreground truncate">{contact.job_title}</div>
                         )}
                       </div>
                     </div>
                   </TableCell>
                   <TableCell
-                    className="text-gray-600 truncate cursor-pointer"
+                    className="text-muted-foreground truncate cursor-pointer"
                     onClick={() => (window.location.href = `/contacts/${contact.id}`)}
                   >
                     {contact.company || '-'}
@@ -465,11 +465,17 @@ export function ContactTable({ contacts }: ContactTableProps) {
                     onClick={() => (window.location.href = `/contacts/${contact.id}`)}
                   >
                     <div className="flex flex-wrap gap-1">
-                      {contact.tags?.map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
+                      {contact.tags?.map((tag) => {
+                        const tagColors: Record<string, string> = {
+                          Founder: 'bg-[#D4E5FF] text-[#0055B3]',
+                          Investor: 'bg-[#CEF6BB] text-[#05690D]',
+                        };
+                        return (
+                          <Badge key={tag} variant="secondary" className={`text-xs ${tagColors[tag] || ''}`}>
+                            {tag}
+                          </Badge>
+                        );
+                      })}
                     </div>
                   </TableCell>
                   <TableCell
@@ -488,7 +494,7 @@ export function ContactTable({ contacts }: ContactTableProps) {
       {/* Pagination */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-500">Rows per page:</span>
+          <span className="text-sm text-muted-foreground">Rows per page:</span>
           <Select value={rowsPerPage.toString()} onValueChange={handleRowsPerPageChange}>
             <SelectTrigger className="w-[100px]">
               <SelectValue />
@@ -503,7 +509,7 @@ export function ContactTable({ contacts }: ContactTableProps) {
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-muted-foreground">
             {rowsPerPage === -1 ? (
               `Showing all ${processedContacts.length} contacts`
             ) : (

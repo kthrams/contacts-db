@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { Header } from '@/components/header';
+import { AppShell } from '@/components/app-shell';
 import { LinkedInUpload } from '@/components/linkedin-upload';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -13,21 +13,18 @@ export default async function ImportPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header userEmail={user.email} />
-
-      <main className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8">
+    <AppShell userEmail={user.email}>
+      <div className="max-w-3xl">
         <div className="mb-6">
-          <h1 className="text-2xl font-semibold text-gray-900">Import Contacts</h1>
-          <p className="text-gray-500 mt-1">
+          <h1 className="text-xl font-semibold text-foreground">Import Contacts</h1>
+          <p className="text-muted-foreground text-sm mt-1">
             Import contacts from LinkedIn
           </p>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <span className="text-xl">💼</span>
+            <CardTitle className="flex items-center gap-2 text-base">
               LinkedIn Export
             </CardTitle>
             <CardDescription>
@@ -38,7 +35,7 @@ export default async function ImportPage() {
             <LinkedInUpload />
           </CardContent>
         </Card>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }

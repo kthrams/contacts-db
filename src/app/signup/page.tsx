@@ -50,12 +50,12 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-2xl font-bold">Dre&apos;s Contact Database</CardTitle>
-            <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-700">MVP</Badge>
+            <CardTitle className="text-xl font-semibold">Dre&apos;s Contact Database</CardTitle>
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0">MVP</Badge>
           </div>
           <CardDescription>
             Create an account to get started
@@ -103,7 +103,7 @@ export default function SignupPage() {
             </div>
 
             {error && (
-              <div className="p-3 rounded-md text-sm bg-red-50 text-red-700 border border-red-200">
+              <div className="p-3 rounded-md text-sm bg-destructive/10 text-destructive border border-destructive/20">
                 {error}
               </div>
             )}
@@ -113,9 +113,9 @@ export default function SignupPage() {
             </Button>
           </form>
 
-          <div className="mt-4 text-center text-sm text-gray-600">
+          <div className="mt-4 text-center text-sm text-muted-foreground">
             Already have an account?{' '}
-            <Link href="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+            <Link href="/login" className="text-primary hover:text-primary/80 font-medium">
               Sign in
             </Link>
           </div>

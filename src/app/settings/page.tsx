@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Header } from '@/components/header';
+import { AppShell } from '@/components/app-shell';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -31,7 +31,6 @@ export default function SettingsPage() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [userEmail, setUserEmail] = useState<string | undefined>();
 
-  // Fetch user email on mount
   useEffect(() => {
     const fetchUser = async () => {
       const supabase = createClient();
@@ -78,7 +77,6 @@ export default function SettingsPage() {
         throw new Error(data.error || 'Failed to delete account');
       }
 
-      // Sign out and redirect to login
       const supabase = createClient();
       await supabase.auth.signOut();
       router.push('/login');
@@ -91,17 +89,14 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header userEmail={userEmail} />
-
-      <main className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-8">Settings</h1>
+    <AppShell userEmail={userEmail}>
+      <div className="max-w-3xl">
+        <h1 className="text-xl font-semibold text-foreground mb-8">Settings</h1>
 
         <div className="space-y-6">
-          {/* Data Management Section */}
           <Card>
             <CardHeader>
-              <CardTitle>Data Management</CardTitle>
+              <CardTitle className="text-base">Data Management</CardTitle>
               <CardDescription>
                 Manage your contact data
               </CardDescription>
@@ -109,14 +104,15 @@ export default function SettingsPage() {
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-gray-900">Delete all contacts</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-medium text-foreground text-sm">Delete all contacts</p>
+                  <p className="text-sm text-muted-foreground">
                     Remove all your contacts from the database. This cannot be undone.
                   </p>
                 </div>
                 <Button
                   variant="outline"
-                  className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                  size="sm"
+                  className="text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/30"
                   onClick={() => setDeleteContactsOpen(true)}
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
@@ -126,11 +122,10 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
 
-          {/* Danger Zone */}
-          <Card className="border-red-200">
+          <Card className="border-destructive/30">
             <CardHeader>
-              <CardTitle className="text-red-600 flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5" />
+              <CardTitle className="text-destructive flex items-center gap-2 text-base">
+                <AlertTriangle className="h-4 w-4" />
                 Danger Zone
               </CardTitle>
               <CardDescription>
@@ -140,13 +135,14 @@ export default function SettingsPage() {
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-gray-900">Delete account</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-medium text-foreground text-sm">Delete account</p>
+                  <p className="text-sm text-muted-foreground">
                     Permanently delete your account and all associated data.
                   </p>
                 </div>
                 <Button
                   variant="destructive"
+                  size="sm"
                   onClick={() => setDeleteAccountOpen(true)}
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
@@ -156,7 +152,7 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
         </div>
-      </main>
+      </div>
 
       {/* Delete All Contacts Dialog */}
       <Dialog open={deleteContactsOpen} onOpenChange={setDeleteContactsOpen}>
@@ -199,8 +195,8 @@ export default function SettingsPage() {
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
-            <p className="text-sm text-gray-600 mb-2">
-              Type <span className="font-mono font-semibold">DELETE</span> to confirm:
+            <p className="text-sm text-muted-foreground mb-2">
+              Type <span className="font-mono font-semibold text-foreground">DELETE</span> to confirm:
             </p>
             <Input
               value={confirmText}
@@ -230,6 +226,6 @@ export default function SettingsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </AppShell>
   );
 }

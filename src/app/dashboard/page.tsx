@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { Header } from '@/components/header';
+import { AppShell } from '@/components/app-shell';
 import { ContactTable } from '@/components/contact-table';
 import { Contact } from '@/types';
 
@@ -25,12 +25,8 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header userEmail={user.email} />
-
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <ContactTable contacts={(contacts as Contact[]) || []} />
-      </main>
-    </div>
+    <AppShell userEmail={user.email}>
+      <ContactTable contacts={(contacts as Contact[]) || []} />
+    </AppShell>
   );
 }
