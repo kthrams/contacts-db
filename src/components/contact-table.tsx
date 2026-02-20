@@ -244,18 +244,13 @@ export function ContactTable({ contacts }: ContactTableProps) {
   };
 
   const getSourceBadge = (source: string) => {
-    const colors: Record<string, string> = {
-      gmail: 'bg-[#FCEEBA] text-[#A82C00]',
-      linkedin_csv: 'bg-[#CEF6BB] text-[#05690D]',
-      manual: 'bg-[#E4ECEC] text-[#545969]',
-    };
     const labels: Record<string, string> = {
       gmail: 'Gmail',
       linkedin_csv: 'LinkedIn',
       manual: 'Manual',
     };
     return (
-      <Badge variant="secondary" className={colors[source] || colors.manual}>
+      <Badge variant="secondary" className="bg-gray-100 text-gray-700 border border-gray-200">
         {labels[source] || source}
       </Badge>
     );
