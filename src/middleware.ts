@@ -30,8 +30,8 @@ export async function middleware(request: NextRequest) {
   );
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
 
   // Protected routes
   const protectedPaths = ['/dashboard', '/contacts', '/import', '/settings'];
@@ -39,14 +39,14 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(path)
   );
 
-  if (isProtectedPath && !user) {
+  if (isProtectedPath && !session) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     return NextResponse.redirect(url);
   }
 
   // Redirect logged-in users away from login
-  if (request.nextUrl.pathname === '/login' && user) {
+  if (request.nextUrl.pathname === '/login' && session) {
     const url = request.nextUrl.clone();
     url.pathname = '/dashboard';
     return NextResponse.redirect(url);
